@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <script src="data.js"></script>
+    <script>
+        const dataEl = JSON.parse(data);
+        console.log(dataEl);
+        const bodyEl = document.querySelector('body');
+        const sectionEl = document.createElement('section');
+        sectionEl.classList.add('content');
+
+        dataEl.forEach(element => {
+            const divEl = document.createElement('div');
+            divEl.classList.add('item');
+
+            const imgEl = document.createElement('img');
+            imgEl.src = element.image;
+            imgEl.setAttribute('width', 250); 
+            imgEl.setAttribute('height', 250);
+
+            const h1El = document.createElement('h1');
+            h1El.textContent = element.answer;
+            h1El.classList.add('txt');
+
+            bodyEl.prepend(sectionEl);
+            sectionEl.append(divEl);
+            divEl.append(imgEl);
+            divEl.append(h1El);
+        });
+    </script>
+</body>
+</html>
