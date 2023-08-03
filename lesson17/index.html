@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        const url = 'https://jsonplaceholder.typicode.com/users';        
+        const getData = async (url) => {
+            const response = await fetch(url);
+            const json = await response.json();
+            return json;
+        };
+        const bodyEl = document.querySelector('body');
+        try {
+            const users = await getData(url);
+            console.log(users);
+            users.forEach(element => {
+                bodyEl.insertAdjacentHTML('beforeend', `
+                <figure class="card" id="${element.id}">
+                    <h2>Name: ${element.name}</h2>
+                    <h2>User Name: ${element.username}</h2>
+                    <p>Email: ${element.email}</p>
+                    <p>Phone: ${element.phone}</p>
+                    <button>Удалить</button>
+                </figure>
+                `);
+                localStorage.setItem(element.id,JSON.stringify(element));
+                
+            });
+        } catch (error) {
+            console.log(error.message);
+        };
+        
+        const buttonEl = document.querySelectorAll('button')
+        buttonEl.forEach(list => {
+            list.addEventListener('click', e => {
+                let element = e.target;
+            do
+                element = element.parentElement;
+            while (element.className !== 'card');
+                const idEl = element.id;
+                element.remove();
+                localStorage.removeItem(idEl);
+            });
+        });
+    </script>
+</body>
+</html>
